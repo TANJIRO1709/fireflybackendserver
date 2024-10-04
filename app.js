@@ -11,7 +11,7 @@ const morgan = require("morgan");
 const fs = require("fs");
 const cors = require("cors");
 const { config } = require("dotenv");
-const port = 4000;
+const port = process.env.PORT || 4000;
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
