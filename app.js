@@ -24,7 +24,7 @@ const MONGODB_URI = process.env.MONGO_URL;
 // CORS Configuration
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174','http://localhost:3000'],
+    origin: ['http://localhost:5173', 'http://localhost:5174','http://localhost:3000','https://nextjs-firefly.vercel.app'],
     credentials: true, // Allow session cookie to be sent cross-domain
   })
 );
