@@ -24,7 +24,7 @@ const MONGODB_URI = process.env.MONGO_URL;
 // CORS Configuration
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: ['http://localhost:5173', 'http://localhost:5174','http://localhost:3000'],
     credentials: true, // Allow session cookie to be sent cross-domain
   })
 );
@@ -114,15 +114,15 @@ app.use((error, req, res, next) => {
 // Fallback Routes for 404 and 500 Errors
 app.get("/500", errorController.get500);
 //app.use(errorController.get404);
-
-// MongoDB Connection and Server Startup
+//Server startup
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+// MongoDB Connection 
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
   })
   .catch((err) => {
     console.log("Failed to connect to MongoDB", err);
