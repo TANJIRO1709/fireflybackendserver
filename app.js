@@ -120,7 +120,7 @@ app.listen(port, () => {
 });
 // MongoDB Connection 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
