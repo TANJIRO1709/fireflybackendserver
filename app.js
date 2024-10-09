@@ -14,12 +14,34 @@ const { config } = require("dotenv");
 const port = process.env.PORT || 4000;
 const errorController = require("./controllers/error");
 const User = require("./models/user");
-
+const { MongoClient, ServerApiVersion } = require('mongodb');
 config();
 
 const app = express();
 
 const MONGODB_URI = process.env.MONGO_URL;
+
+const client = new MongoClient(MONGODB_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 const allowedOrigins = [
   'http://localhost:5173', 'http://localhost:5174','http://localhost:3000','https://nextjs-firefly.vercel.app'];
@@ -128,18 +150,19 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 // MongoDB Connection 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log("Failed to connect to MongoDB", err);
-  });
 
-  app.get("/", (req, res) => {
-    res.send({
-        message: "Project Firefly Server",
-        health: "ok",
-    });
-});
+// mongoose
+//   .connect(process.env.MONGO_URL)
+//   .then(() => {
+//     console.log("Connected to MongoDB");
+//   })
+//   .catch((err) => {
+//     console.log("Failed to connect to MongoDB", err);
+//   });
+
+//   app.get("/", (req, res) => {
+//     res.send({
+//         message: "Project Firefly Server",
+//         health: "ok",
+//     });
+// });
