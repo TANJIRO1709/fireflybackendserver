@@ -21,10 +21,12 @@ const app = express();
 const MONGODB_URI = process.env.MONGO_URL;
 
 // CORS Configuration
-app.use(cors({
-  origin: '*', // Allow all origins
-  credentials: true, // Allow cookies or authorization headers
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:3000","https://nextjs-firefly.vercel.app"], // Replace with your frontend's domain
+    credentials: true, // Allow cookies or Authorization headers
+  })
+);
 
 // Body Parser Middleware
 app.use(express.json({ limit: "10mb" }));
